@@ -1,0 +1,136 @@
+html,body {
+	padding: 0;
+	margin: 0;
+	font-family: microsoft yahei;
+	background-color: #eee;
+}
+
+article {
+	background-color: #fff;
+	margin: 20px;
+	box-shadow: 1px 1px 2px 1px;
+	padding: 20px;
+	margin-right: 450px;
+}
+
+header {
+	height: 60px;
+	background-color: #000;
+
+}
+header img {
+	width: 60px;
+	height: 60px;
+	margin-left: 20px;
+}
+
+header ul {
+	float: right;
+}
+header ul li {
+	float: left;
+	margin-right: 20px;
+	color: #fff;
+}
+
+header ul li a {
+	color: #fff;
+	text-decoration: none;
+	font-size: 10px;
+}
+
+h3 {
+	color: #808080;
+}
+
+
+article span {
+	font-size: 5px;
+}
+
+article p {
+	text-indent: 2em;
+}
+
+article ul li {
+	list-style-type: none;
+}
+
+.pic ul li {
+	list-style-type: none;
+	border: 1px solid;
+	width: 125px;
+	height: 125px;
+	text-align: center;
+	margin-top:10px;
+}
+
+.pic img {
+	width: 100px;
+	height: 100px;
+}
+
+table {
+	width:100%;
+	border-collapse: collapse;
+}
+table th {
+	background-color: #000;
+	color:#fff;
+	padding: 0;
+	margin: 0;
+}
+
+table td {
+	border: 1px solid #ccc;
+	margin: 0;
+	padding: 0;
+
+}
+
+.last-col {
+	background-color: #ccc;
+}
+
+aside {
+	background-color: #fff;
+	margin: 20px;
+	box-shadow: 1px 1px 2px 1px;
+	padding: 20px;	
+	float: right;
+	width:350px;
+}
+
+aside label {
+	width: 35%;
+	text-align: right;
+	float: left;
+}
+aside p {
+	margin-left: 35%;
+}
+aside .submit {	
+	width: 80%;		
+	background-color: #3355d0;
+	height: 30px;
+	border:10px;
+	display: block;
+	margin: 0 auto;
+	color: #fff;
+	border-radius: 10px;
+
+}
+
+footer {
+	height: 30px;
+	background-color: #000;
+}
+
+textarea {
+	width: 50%;
+	height: 100%;
+}
+
+
+
+
