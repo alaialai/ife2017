@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /*reset*/
+
+        input {
+            outline: none;
+        }
+        /*index*/
+
+        label {
+            padding: 0 10px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .tips {
+            color: #ccc;
+        }
+
+        .warn {
+            color: #ff0000;
+        }
+
+        .pass {
+            color: #008000;
+        }
+
+        .mid {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        input[type=text] {
+            border-radius: 5px;
+            width: 200px;
+            height: 20px;
+            position: relative;
+            border: 2px #ccc solid;
+        }
+
+        input[type=button] {
+            background-color: #2F79BA;
+            border: none;
+            color: #fff;
+            border-radius: 5px;
+            width: 50px;
+            height: 25px;
+        }
+
+        p {
+            margin: 5px 0 10px 0;
+            font-size: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="">
+        <div class="input_area">
+            <label for="text_01">名称</label>
+            <div class="mid">
+                <input id="text_01" type="text">
+                <p class="tips">必填，长度为4~16个字符</p>
+            </div>
+            <input type="button" onclick="check(text_01)" value="验证"><br/>
+        </div>
+
+        <div class="input_area">
+            <label for="text_02">名称</label>
+            <div class="mid">
+                <input id="text_02" type="text">
+                <p class="tips">必填，长度为4~16个字符</p>
+            </div>
+            <input type="button" onclick="check(text_02)" value="验证"><br/>
+        </div>
+
+        <div class="input_area">
+            <label for="text_03">名称</label>
+            <div class="mid">
+                <input id="text_03" type="text">
+                <p class="tips">必填，长度为4~16个字符</p>
+            </div>
+            <input type="button" onclick="check(text_03)" value="验证"><br/>
+        </div>
+    </form>
+</body>
+<script>
+    function check(el) {
+        var str = el.value;
+        var len = 0;
+        var p = el.nextElementSibling;
+        for (var i in str) {
+            if (str[i].match(/[^\x00-\xff]/ig) != null) {
+                len += 2;
+            } else {
+                len += 1;
+            }
+        }
+        if (len === 0) {
+            p.setAttribute('class', 'warn');
+            p.innerHTML = "姓名不能为空";
+        } else if (len > 16 || len < 4) {
+            p.setAttribute('class', 'warn');
+            p.innerHTML = "请输入长度为4-16位的字符";
+        } else {
+            p.setAttribute('class', 'pass');
+            p.innerHTML = "格式正确";
+        }
+    }
+</script>
+
+</html>
