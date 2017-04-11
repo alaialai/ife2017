@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>task002</title>
+    <style>
+        /*reset*/
+
+        input {
+            outline: none;
+        }
+        /*index*/
+
+        form {
+            width: 500px;
+            text-align: right;
+        }
+
+        .input_area {
+            margin-bottom: 10px;
+        }
+
+        label {
+            padding: 0 10px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .tips {
+            color: #ccc;
+            display: none;
+        }
+
+        .warn {
+            color: #ff0000;
+        }
+
+        .pass {
+            color: #62BA4A;
+        }
+
+        .mid {
+            display: inline-block;
+            vertical-align: top;
+            text-align: left;
+        }
+
+        .input_txt {
+            border-radius: 5px;
+            width: 400px;
+            height: 20px;
+            position: relative;
+            border: 2px #ccc solid;
+        }
+
+        input[type=button] {
+            background-color: #2F79BA;
+            border: none;
+            color: #fff;
+            border-radius: 5px;
+            width: 50px;
+            height: 25px;
+        }
+
+        p {
+            margin: 5px 0 10px 0;
+            font-size: 10px;
+        }
+
+        .input_area label:nth-of-type(1) {
+            width: 70px;
+            text-align: right;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="">
+        <div class="input_area">
+            <label for="text_01">名称</label>
+            <div class="mid">
+                <input class="input_txt" id="text_name" type="text">
+                <p class="tips">必填，长度为4~16个字符</p>
+            </div>
+
+        </div>
+
+        <div class="input_area">
+            <label for="text_02">密码</label>
+            <div class="mid">
+                <input class="input_txt" id="text_password" type="password">
+                <p class="tips">请输入6位数字</p>
+            </div>
+        </div>
+
+        <div class="input_area">
+            <label for="text_03">密码确认</label>
+            <div class="mid">
+                <input class="input_txt" id="text_confirm" type="password">
+                <p class="tips">请再输入一次密码</p>
+            </div>
+        </div>
+
+        <div class="input_area">
+            <label for="text_04">邮箱</label>
+            <div class="mid">
+                <input class="input_txt" id="text_mail" type="text">
+                <p class="tips">请输入邮箱</p>
+            </div>
+        </div>
+
+        <div class="input_area">
+            <label for="text_05">手机</label>
+            <div class="mid">
+                <input class="input_txt" id="text_phone" type="text">
+                <p class="tips">请输入手机号码</p>
+            </div>
+        </div>
+        <input type="button" onclick="checkAll()" value="提交"><br/>
+    </form>
+</body>
+
+
+<script>
+    var tips_ele = document.getElementsByClassName("tips");
+    var input_ele = document.getElementsByClassName("input_txt");
+
+    for (let x = 0; x < input_ele.length; x++) {
+        input_ele[x].addEventListener("focus", function () {
+            showTips(tips_ele[x]);
+        });
+
+        switch (x) {
+            case 0:
+                input_ele[x].addEventListener("focusout", function () {
+                    checkName();
+                });
+                break;
+            case 1:
+                input_ele[x].addEventListener("focusout", function () {
+                    checkPassword();
+                });
+                break;
+            case 2:
+                input_ele[x].addEventListener("focusout", function () {
+                    confirmkPassword();
+                });
+                break;
+            case 3:
+                input_ele[x].addEventListener("focusout", function () {
+                    checkMail();
+                });
+                break;
+            case 4:
+                input_ele[x].addEventListener("focusout", function () {
+                    checkPhone();
+                });
+                break;
+        }
+    }
+
+    //part-style
+    function showTips(ele) {
+        ele.style.display = "block";
+    }
+
+    function styleWarn(ele, p) {
+        p.setAttribute('class', 'tips warn');
+        ele.style.border = "2px solid #ff0000";
+    }
+
+    function stlyePass(ele, p) {
+        ele.style.border = "2px solid #62BA4A";
+        p.setAttribute('class', 'tips pass');
+    }
+
+    //part-check
+    function checkName() {
+        var ele = input_ele[0];
+        var str = ele.value;
+        var len = 0;
+        var p = ele.nextElementSibling;
+        showTips(tips_ele[0]);
+        for (var i in str) {
+            if (str[i].match(/[^\x00-\xff]/ig) != null) {
+                len += 2;
+            } else {
+                len += 1;
+            }
+        }
+        if (len === 0) {
+            styleWarn(ele, p);
+            p.innerHTML = "姓名不能为空";
+            return "姓名格式错误";
+        } else if (len > 16 || len < 4) {
+            styleWarn(ele, p);
+            p.innerHTML = "请输入长度为4-16位的字符";
+            return "姓名格式错误";
+        } else {
+            stlyePass(ele, p);
+            p.innerHTML = "格式正确";
+            return true;
+        }
+    }
+
+    function checkPassword() {
+        var ele = input_ele[1];
+        var str = ele.value;
+        var len = 0;
+        var p = ele.nextElementSibling;
+        showTips(tips_ele[1]);
+        for (var i in str) {
+            if (str[i].match(/[^\x00-\xff]/ig) != null) {
+                len += 2;
+            } else {
+                len += 1;
+            }
+        }
+        if (len === 0) {
+            styleWarn(ele, p);
+            p.innerHTML = "密码不能为空";
+            return "密码输入错误";
+        } else if (len != 6) {
+            styleWarn(ele, p);
+            p.innerHTML = "请输入长度6位数字密码";
+            return "密码输入错误";
+        } else {
+            stlyePass(ele, p);
+            p.innerHTML = "格式正确";
+            return true;
+        }
+    }
+
+    function confirmkPassword() {
+        var ele = input_ele[2]
+        var password = document.getElementById("text_password").value;
+        var str = ele.value;
+        var len = 0;
+        var p = ele.nextElementSibling;
+        showTips(tips_ele[2]);
+        for (var i in str) {
+            if (str[i].match(/[^\x00-\xff]/ig) != null) {
+                len += 2;
+            } else {
+                len += 1;
+            }
+        }
+        if (len === 0) {
+            styleWarn(ele, p);
+            p.innerHTML = "请再次输入密码";
+            return "两次密码不同";
+        } else if (password === str) {
+            stlyePass(ele, p);
+            p.innerHTML = "两次密码相同";
+            return true;
+        } else {
+            styleWarn(ele, p);
+            p.innerHTML = "两次密码不同";
+            return "两次密码不同";
+        }
+    }
+
+    function checkMail() {
+        var ele = input_ele[3];
+        var str = ele.value;
+        var len = 0;
+        var p = ele.nextElementSibling;
+        showTips(tips_ele[3]);
+        for (var i in str) {
+            if (str[i].match(/[^\x00-\xff]/ig) != null) {
+                len += 2;
+            } else {
+                len += 1;
+            }
+        }
+        if (len === 0) {
+            styleWarn(ele, p);
+            p.innerHTML = "邮箱不能为空";
+            return "邮箱格式错误";
+        } else if ((/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/.test(str))) {
+            stlyePass(ele, p);
+            p.innerHTML = "邮箱格式正确";
+            return true;
+        } else {
+            styleWarn(ele, p);
+            p.innerHTML = "请正确输入邮箱";
+            return "邮箱格式错误";
+        }
+    }
+
+
+    function checkPhone() {
+        var ele = input_ele[4];
+        var str = ele.value;
+        var len = 0;
+        var p = ele.nextElementSibling;
+        showTips(tips_ele[4]);
+        for (var i in str) {
+            if (str[i].match(/[^\x00-\xff]/ig) != null) {
+                len += 2;
+            } else {
+                len += 1;
+            }
+        }
+        if ((/^1[34578]\d{9}$/.test(str))) {
+            stlyePass(ele, p);
+            p.innerHTML = "手机号格式正确";
+            return true;
+        } else if (len === 0) {
+            styleWarn(ele, p);
+            p.innerHTML = "手机号不能为空";
+
+        } else {
+            styleWarn(ele, p);
+            p.innerHTML = "请正确输入手机号码";
+        }
+        return "手机号码错误";
+    }
+
+    function checkAll() {
+        var check = [];
+        var checklist = [];
+        checklist.push(checkName());
+        checklist.push(checkPassword());
+        checklist.push(confirmkPassword());
+        checklist.push(checkMail());
+        checklist.push(checkPhone());
+
+        for (var x = 0; x < checklist.length; x++) {
+            if (checklist[x] != true) {
+                check.push(checklist[x]);
+            }
+        }
+        if (check != null) {
+            var str = "";
+            for (var z = 0; z < check.length; z++) {
+                str += check[z] + "\n";
+            }
+            alert(str);
+        }
+    }
+</script>
+
+</html>
