@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-cnm-hans">
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+</head>
+<style>
+    .root {
+        display: flex;
+        border: 1px solid #000;
+        height: 100px;
+        width: 400px;
+    }
+
+    .son {
+        display: flex;
+        flex: 1;
+        margin: 5px;
+        border: 1px solid #000;
+    }
+</style>
+<body>
+    <div class="root">
+        <div class="son">
+
+            <div class="son">
+            </div>
+            <div class="son">
+            </div>
+            <div class="son">
+            </div>
+            <div class="son">
+            </div>
+        </div>
+        <div class="son">
+            <div class="son">
+            </div>
+            <div class="son">
+            </div>
+        </div>
+    </div>
+    <input type="button" value="前序">
+    <input type="button" value="中序">
+    <input type="button" value="后序">
+</body>
+<script>
+    var root = document.getElementsByClassName('root')[0];
+    var btn = document.getElementsByTagName('input');
+    var divList = [];
+    var timer;
+    window.onload = function() {
+        btn[0].onclick = function() {
+            reset();
+            preOrder(root);
+            chargeColor();
+
+        }
+        btn[1].onclick = function() {
+            reset();
+            inOrder(root);
+            chargeColor();
+
+        }
+        btn[2].onclick = function() {
+            reset();
+            postOrder(root);
+            chargeColor();
+        }
+    }
+
+    //前序排序
+    function preOrder(node) {                
+        if (node != null) {
+            for (var i = 0; i < node.children.length;i++) {
+                divList.push(node.children[i]);
+                preOrder(node.children[i]);
+            }
+        }
+    }
+    //中序排序
+    function inOrder(node) {
+        if (node != null) {
+            inOrder(node.firstElementChild);
+            divList.push(node);
+            inOrder(node.lastElementChild);
+        }
+    }
+
+    //后序排序
+    function postOrder(node) {
+        if (node != null) {
+            postOrder(node.firstElementChild);
+            postOrder(node.lastElementChild);
+            divList.push(node);
+        }
+    }
+    //更换颜色
+    function chargeColor() {
+        var i = 0;
+        divList[i].style.backgroundColor = "blue";
+        timer = setInterval(function(argument) {
+            i++;
+            if (i < divList.length) {
+                divList[i].style.backgroundColor = "blue";
+                divList[i - 1].style.backgroundColor = "#fff";
+            } else {
+                clearInterval(timer);
+            }
+        }, 500);
+    }
+    //重置
+    function reset() {
+        var div = document.getElementsByTagName('div');
+        divList = [];
+        clearInterval(timer);
+        for (var i = 0; i < div.length; i++) {
+            div[i].style.backgroundColor = '#fff';
+        }
+    }
+</script>
+</html>
