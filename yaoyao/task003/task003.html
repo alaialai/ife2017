@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <style>
+        html {
+            font-size: 24px;
+        }
+
+        form {
+            width: 400px;
+        }
+
+        select {
+            width: 150px;
+            text-align: center;
+            border-radius: 5px;
+            padding: 0 5px;
+            margin: 0 10px;
+        }
+
+        input[type='text'] {
+            width: 200px;
+            margin: 0 10px;
+            border-radius: 2px;
+            border: 1px solid #666;
+            padding: 2px;
+            height: 20px;
+        }
+
+        .radio-selcet {
+            text-align: center;
+        }
+
+        .inSchool {
+            display: flex;
+            margin: 10px 0;
+        }
+
+        .outSchool {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <div class="radio-selcet">
+            <input type="radio" id="inSchoolRadio" name="student" checked="true"><label for="inSchoolRadio">在校生</label>
+            <input type="radio" id="outSchoolRadio" name="student"><label for="outSchoolRadio">非在校生</label>
+        </div>
+
+        <div class="inSchool">
+            学校<select name="city" id="city">
+                <option value="bj">北京</option>             
+                <option value="sh">上海</option>   
+                 <option value="gz">广州</option> 
+                  <option value="sz">深圳</option>                      
+            </select>
+            <select name="School" id="school">
+                <option >北京大学</option> 
+                <option >北京水产大学</option> 
+                <option >北京国土大学</option>    
+              </select>
+
+        </div>
+        <div class="outSchool hide">
+            <label for="text">就业单位</label> <input type="text" id="text" value="">
+        </div>
+    </form>
+
+    <script>
+        var inSchoolRadio = document.getElementById('inSchoolRadio');
+        var outSchoolRadio = document.getElementById('outSchoolRadio');
+        var inSchool = document.querySelector('.inSchool');
+        var outSchool = document.querySelector('.outSchool');
+        var cityList = ["北京", "上海", "广州", "深圳"]
+        var schoolDate = {
+            bj: ["北京的大学", "北京水产大学", "北京国土大学"],
+            sh: ["上海大学", "上海家里蹲大学", "上海复旦大学"],
+            gz: ["广州理工大学", "广州大学", "广州傻傻大学"]
+        };
+
+        inSchoolRadio.onclick = function() {
+            radioCharge();
+        }
+        outSchoolRadio.onclick = function() {
+            radioCharge();
+        }
+        document.getElementById('city').onchange = function() {
+            selectDistrict();
+        }
+
+        function radioCharge() {
+            if (inSchoolRadio.checked) {
+                inSchool.className = "inSchool";
+                outSchool.className = "outSchool hide";
+            } else {
+                inSchool.className = "inSchool hide";
+                outSchool.className = "outSchool";
+            }
+        }
+
+        function selectDistrict() {
+            var source = document.getElementById('city');
+            var target = document.getElementById('school');
+            var selected = source.options[source.selectedIndex].value;
+            target.innerHTML = '';
+
+            for (var i = 0; i < schoolDate[selected].length; i++) {
+                var opt = document.createElement('option');
+                opt.value = schoolDate[selected][i];
+                opt.innerHTML = schoolDate[selected][i];
+                target.appendChild(opt);
+            }
+        }
+    </script>
+</body>
+</html>
