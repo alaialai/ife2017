@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-cnm-hans">
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+</head>
+<style>
+    .root {
+        display: flex;
+        border: 1px solid #000;
+        height: 100px;
+        width: 400px;
+    }
+
+    .son {
+        display: flex;
+        flex: 1;
+        margin: 5px;
+        border: 1px solid #000;
+    }
+</style>
+<body>
+    <div class="root">
+        <div class="son">
+
+            <div class="son">
+            </div>
+            <div class="son">
+            </div>
+            <div class="son">
+            </div>
+            <div class="son">
+            </div>
+        </div>
+        <div class="son">
+            <div class="son">
+            </div>
+            <div class="son">
+            </div>
+        </div>
+    </div>
+    <input type="button" value="前序">
+    <input type="button" value="后序">
+    <input type="button" value="重置">
+    <input type="button" value="删除">
+    <input type="button" value="添加">
+</body>
+<script>
+    var root = document.getElementsByClassName('root')[0];
+    var btn = document.getElementsByTagName('input');
+    var allDiv = document.getElementsByTagName('div');
+    var divList = [];
+    var timer;
+    var chooseDiv = [];
+    var str = " <div class=\"son\"></div>"
+    window.onload = function() {
+        for (var x = 0; x < allDiv.length; x++) {
+            allDiv[x].style.backgroundColor = '#fff';
+            allDiv[x].onclick = function() {
+                choose(event);
+            }
+        }
+
+        btn[0].onclick = function() {
+            reset();
+            preOrder(root);
+            chargeColor();
+        }
+        btn[1].onclick = function() {
+            reset();
+            postOrder(root);
+            chargeColor();
+        }
+        btn[2].onclick = function() {
+            reset();
+        }
+        btn[3].onclick = function() {
+            del();
+        }
+        btn[4].onclick = function() {
+            add();
+        }
+    }
+    //前序排序
+    function preOrder(node) {
+        divList.push(node);
+        if (node != null) {
+            for (var i = 0; i < node.children.length; i++) {
+                preOrder(node.children[i]);
+            }
+        }
+    }
+
+    //后序排序
+    function postOrder(node) {
+        if (node != null) {
+            for (var i = node.children.length; i >= 0; i--) {
+                postOrder(node.children[i]);
+            }
+            divList.push(node);
+        }
+    }
+    //更换颜色
+    function chargeColor() {
+        var i = 0;
+        divList[i].style.backgroundColor = "blue";
+        timer = setInterval(function(argument) {
+            i++;
+            if (i < divList.length) {
+                divList[i].style.backgroundColor = "blue";
+                divList[i - 1].style.backgroundColor = "#fff";
+            } else {
+                clearInterval(timer);
+            }
+        }, 500);
+    }
+
+    //重置
+    function reset() {
+        var div = document.getElementsByTagName('div');
+        divList = [];
+        chooseDiv = [];
+        clearInterval(timer);
+        for (var i = 0; i < div.length; i++) {
+            div[i].style.backgroundColor = '#fff';
+        }
+    }
+    //选择
+    function choose(event) {
+        event.stopPropagation();
+        event.cancelBubble = true;
+        event.target.style.backgroundColor = "yellow";
+        chooseDiv.push(event.currentTarget);
+    }
+    //删除
+    function del() {
+        for (var z = 0; z < chooseDiv.length; z++) {
+            chooseDiv[z].parentNode.removeChild(chooseDiv[z]);
+        }
+        chooseDiv = [];
+    }
+    //添加
+    function add() {
+        for (var z = 0; z < chooseDiv.length; z++) {
+            var child = document.createElement('div');
+            child.setAttribute('class', 'son');
+            child.onclick = function() {
+                choose(event);
+            }
+            chooseDiv[z].appendChild(child);
+        }
+        chooseDiv = [];
+        reset();
+    }
+</script>
+</html>
